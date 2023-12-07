@@ -4,7 +4,6 @@ const run = () => {
     const rows = readRowsFromFile(__dirname + '/data');
 
     const input = parseInput(rows);
-    console.log(input);
 
     let result = 1;
     for(let i=0; i<input.length; i++) {

@@ -25,12 +25,10 @@ console.log("===================================");
 console.log("# ADVENT OF CODE 2023 - SOLUTIONS #");
 console.log("===================================");
 
-/*
 printDay( 1, day1part1, day1part2);
 printDay( 2, day2part1, day2part2);
 printDay( 3, day3part1, day3part2);
 printDay( 4, day4part1, day4part2);
 printDay( 5, day5part1, day5part2);
 printDay( 6, day6part1, day6part2);
-*/
 printDay( 7, day7part1, day7part2);

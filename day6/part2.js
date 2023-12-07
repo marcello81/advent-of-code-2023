@@ -17,13 +17,10 @@ const run = () => {
 }
 
 const parseRace = (rows) => {
-
-    return rows.map( r => Number( r.replaceAll(" ","").split(":")[1] ));
-    /*
-      duration: Number(rows[0].replaceAll(" ","").split(":")[1]), 
+    return {
+        duration: Number(rows[0].replaceAll(" ","").split(":")[1]), 
         record : Number(rows[1].replaceAll(" ","").split(":")[1])
     }
-    */   
 }
 
 module.exports = run;
