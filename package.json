@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "description": "Solutions of Advent of Code 2023 => https://adventofcode.com/2023/",
   "main": "index.js",
-  "author": "marcello0081"
+  "author": "marcello0081",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }

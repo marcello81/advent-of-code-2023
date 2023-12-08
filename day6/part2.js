@@ -24,3 +24,7 @@ const parseRace = (rows) => {
 }
 
 module.exports = run;
+
+if(process.env['NODE_DEV'] == 'TEST') {
+    module.exports.parseRace = parseRace;
+}
