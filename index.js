@@ -14,6 +14,8 @@ const day7part1 = require("./day7/part1");
 const day7part2 = require("./day7/part2");
 const day8part1 = require("./day8/part1");
 const day8part2 = require("./day8/part2");
+const day9part1 = require("./day9/part1");
+const day9part2 = require("./day9/part2");
 
 const CURRENT_DAY = 2;
 
@@ -35,5 +37,6 @@ printDay( 4, day4part1, day4part2);
 printDay( 5, day5part1, day5part2);
 printDay( 6, day6part1, day6part2);
 printDay( 7, day7part1, day7part2);
-*/
 printDay( 8, day8part1, day8part2);
+*/
+printDay( 9, day9part1, day9part2);
