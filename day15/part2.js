@@ -2,10 +2,6 @@ const fs = require("fs");
 
 const DATA = "data";
 
-// [ HASH
-//   [ [rn 1] [ cm 2] ]
-// ]
-
 const run = () => {
     const steps = fs.readFileSync(__dirname + '/' + DATA, "utf-8").split(",");
 
@@ -17,8 +13,7 @@ const run = () => {
         
         const hash = calculateHash(labelAndLength[0]);
 
-        if(boxes[hash]) {
-            // replace in existing list       
+        if(boxes[hash]) {      
             let replaced = false;     
             for(let j=0; j<boxes[hash].length; j++) {
                 if(boxes[hash][j][0] === labelAndLength[0]) {
@@ -32,12 +27,10 @@ const run = () => {
                 }
             }
 
-            // add to existing list
             if(replaced === false && labelAndLength[1]) {
                 boxes[hash].push([labelAndLength[0], labelAndLength[1]]);
             }
         } else if(labelAndLength[1]) {
-            // add to new list
             boxes[hash] = [];
             boxes[hash].push([labelAndLength[0], labelAndLength[1]]);
         }
