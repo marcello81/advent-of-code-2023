@@ -7,12 +7,6 @@ const run = () => {
     let sources = getSeeds(rows[0]);
     let destinations = [];
 
-    console.log("seeds: ");
-    console.log(sources);
-
-    console.log("Maps:");
-    console.log(maps);
-
     // go through each mapping step
     for(let i=0; i<maps.length; i++) {
         
@@ -26,8 +20,6 @@ const run = () => {
             // go through the mappings
             for(let k=0; k<map.length; k++) {
 
-                console.log("k: "+  k);
-
                 const mapping = map[k];
                 const diff = mapping[1] - mapping[0];
                 const sourceStart = source[0];
@@ -37,8 +29,6 @@ const run = () => {
                 const mappingDestStart = source[0] - diff;
                 const mappingDestLength = source[1];
 
-                console.log("sourceStart: " + sourceStart + ", mappingSrcStart: " + mappingSrcStart + ", sourceEnd: " + sourceEnd + ", mappingSrcEnd: " + mappingSrcEnd);
-                
                 // lower than range
                 if(sourceStart < mappingSrcStart && sourceEnd < mappingSrcStart) continue;
 
@@ -59,33 +49,8 @@ const run = () => {
             }
         }
 
-        logProgress(sources, destinations);
         sources = destinations;
     }
-    
-    /*
-    // map per map
-    for(let j=0; j<maps.length; j++) {
-
-        const currMap = maps[i];
-
-        // sourceRange per sourceRange
-        for(let i=0; i<sourceRanges.length; i+=2) {
-            const sourceRangeStart = sourceRanges[i];
-            const sourceRangeLength = sourceRanges[i-1];
-
-            // is there any entry in the current map ?
-            for(let k=0; k<currMap.length; k++) {
-                const currentMapRange = currMap[k];
-                const mapSourceRangeStart = currentMapRange[1];
-                const mapSourceRangeEnd = mapSourceRangeStart + currentMapRange[2] - 1;
-
-                 
-
-            }
-        }
-    }
-    */
 
     return 0;
 }
@@ -97,13 +62,6 @@ const getSeeds = (row) => {
         seeds.push([ numbers[i], numbers[i+1]]); 
     }
     return seeds;
-}
-
-const logProgress = (sources, destinations) => {
-    console.log("sources -> destinations");
-    console.log(sources);
-    console.log(" -> ");
-    console.log(destinations);
 }
 
 const getMaps = (rows) => {

@@ -23,8 +23,6 @@ const getMaps = (rows) => {
         }
     }
     mappings.push(tmpMap);
-
-    console.log(mappings);
 }
 
 const rows = readRowsFromFile(__dirname + '/data');

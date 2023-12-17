@@ -11,8 +11,6 @@ const run = () => {
     const loop = [];
     const map = getMap();
 
-    //console.log(map);
-    
     let startPos = getStartCoordinates(map); // [y, x]
     let currPos = startPos;
     let lastMove;
@@ -36,15 +34,10 @@ const run = () => {
 
     replaceStart(map, startPos);
 
-    //console.log("\nloop:");
-    //console.log(loop);
-
     const enclosedByLoop = [];
     for(let i=0; i<map.length; i++){
         for(let j=0; j<map[i].length; j++){
             if(isInLoop(loop, [i,j])) continue;
-
-            console.log("\ncheck: [" + i + ", " + j + "]");
 
             let crossed = 0;
             for(let k=j+1; k<map[0].length; k++) {
@@ -53,10 +46,8 @@ const run = () => {
                 if(map[i][k] === "|" || map[i][k] === "S") {
                     crossed++;
                 } else if(map[i][k] === "L") {
-                    console.log(" - found L ...");
                     for(let m=k+1; m<map[0].length; m++) {
                         if(map[i][m] === "7" && isInLoop(loop, [i, m])) {
-                            console.log(" - ... and 7 afterwards");
                             crossed++;
                             k=m;
                             break;
@@ -66,10 +57,8 @@ const run = () => {
                         break;
                     }
                 } else if(map[i][k] === "F") {
-                    console.log(" - found F ...");
                     for(let m=k+1; m<map[0].length; m++) {
                         if(map[i][m] === "J" && isInLoop(loop, [i, m])) {
-                            console.log(" - ... and J afterwards");
                             crossed++;
                             k=m;
                             break;
@@ -81,14 +70,9 @@ const run = () => {
                 }
             }
 
-            console.log(" => " + crossed);
-            
             if(crossed > 0 && crossed % 2 == 1) enclosedByLoop.push([i, j]);
         }
     }
-
-    console.log("\nenclosed:");
-    console.log(enclosedByLoop);
 
     return enclosedByLoop.length;
 }
