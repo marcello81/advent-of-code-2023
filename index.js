@@ -28,6 +28,14 @@ const day14part1 = require("./day14/part1");
 const day14part2 = require("./day14/part2");
 const day15part1 = require("./day15/part1");
 const day15part2 = require("./day15/part2");
+const day16part1 = require("./day16/part1");
+const day16part2 = require("./day16/part2");
+//const day17part1 = require("./day17/part1");
+//const day17part2 = require("./day17/part2");
+const day18part1 = require("./day18/part1");
+const day18part2 = require("./day18/part2");
+const day19part1 = require("./day19/part1");
+const day19part2 = require("./day19/part2");
 
 const CURRENT_DAY = 2;
 
@@ -41,6 +49,7 @@ console.log("===================================");
 console.log("# ADVENT OF CODE 2023 - SOLUTIONS #");
 console.log("===================================");
 
+/*
 printDay( 1, day1part1, day1part2);
 printDay( 2, day2part1, day2part2);
 printDay( 3, day3part1, day3part2);
@@ -56,3 +65,8 @@ printDay( 12, day12part1, day12part2);
 printDay( 13, day13part1, day13part2);
 printDay( 14, day14part1, day14part2);
 printDay( 15, day15part1, day15part2);
+printDay( 16, day16part1, day16part2);
+printDay( 17, day17part1, day17part2);
+printDay( 18, day18part1, day18part2);
+*/
+printDay( 19, day19part1, day19part2);

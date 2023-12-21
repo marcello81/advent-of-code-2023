@@ -1,5 +1,5 @@
-const fs = require("fs");
-const { EOL } = require("os");
+import fs from "fs";
+import { EOL } from "os";
 
 const readRowsFromFile = (filename) => fs.readFileSync(filename, "utf-8").split(EOL);
 
