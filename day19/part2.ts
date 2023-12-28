@@ -1,39 +1,10 @@
 import fs from "fs";
 import { EOL } from "os";
+import { Condition } from "./models/Condition";
+import { Rule } from "./models/Rule";
+import { Workflow } from "./models/Workflow";
 
 const DATA: string = "data2";
-
-class Condition {
-    name: number;
-    sign : string;
-    value : number;
-
-    constructor(name: number, sign: string, value: number) {
-        this.name = name;
-        this.sign = sign;
-        this.value = value;
-    }
-}
-
-class Rule {
-    condition: Condition | null;
-    goto: string;
-
-    constructor(condition: Condition|null, goto: string) {
-        this.condition = condition;
-        this.goto = goto;
-    }
-}
-
-class Workflow {
-    name: string;
-    rules: Rule[];
-
-    constructor(name: string, rules: Rule[]) {
-        this.name = name;
-        this.rules = rules;
-    }
-}
 
 const parseWorkflows = (): Map<string, Workflow> => {
     const workflowsStr = fs.readFileSync(__dirname + '/' + DATA, "utf-8").split(EOL+EOL)[0];  
@@ -76,11 +47,7 @@ const run = () => {
     const acceptedPaths : number[][][] = [];
     collectAcceptedPaths(acceptedPaths, workflows, "in", currentPath);      
     
-    let result = 0;
-    for(const path of acceptedPaths) {
-        const multi = (path[0][1] - path[0][0]) * (path[1][1] - path[1][0]) * (path[2][1] - path[2][0]) * (path[3][1] - path[3][0]);
-        if(multi > result) result = multi;
-    }
+    let result = getResult(acceptedPaths);
 
     console.log(result);
 }
@@ -118,6 +85,16 @@ function collectAcceptedPaths( acceptedPaths: number[][][], workflows: Map<strin
             collectAcceptedPaths(acceptedPaths, workflows, rule.goto, tmpPath);
         }
     }
+}
+
+const getResult = (acceptedPaths: number[][][]) => {
+    let result = 0;
+    for (const path of acceptedPaths) {
+        const multi = (path[0][1] - path[0][0]) * (path[1][1] - path[1][0]) * (path[2][1] - path[2][0]) * (path[3][1] - path[3][0]);
+        console.log("[x:" + path[0][0] + "-" + path[0][1] + "][m:" + path[1][0] + "-" + path[1][1] + "][a:" + path[2][0] + "-" + path[2][1] + "][s:" + path[3][0] + "-" + path[3][1] + "]");
+        if (multi > result) result = multi;
+    }
+    return result;
 }
 
 run();
