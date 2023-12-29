@@ -2,18 +2,28 @@ import fs from "fs";
 import { EOL } from "os";
 import { Condition } from "./models/Condition";
 import { Rule } from "./models/Rule";
-import { Workflow } from "./models/Workflow";
 
 const DATA: string = "data2";
 
-const parseWorkflows = (): Map<string, Workflow> => {
+const run = () => {
+    const workflows : Map<string, Rule[]> = parseWorkflows();
+    
+    const currentPath : number[][] = [[0, 4001], [0,4001], [0,4001], [0,4001]];
+    
+    const acceptedPaths : number[][][] = [];
+    collectAcceptedPaths(acceptedPaths, workflows, "in", currentPath);      
+    
+    console.log(getResult(acceptedPaths));
+}
+
+const parseWorkflows = (): Map<string, Rule[]> => {
     const workflowsStr = fs.readFileSync(__dirname + '/' + DATA, "utf-8").split(EOL+EOL)[0];  
     
-    const workflows = new Map<string, Workflow>();
+    const workflows = new Map<string, Rule[]>();
     for(const workflowStr of workflowsStr.split(EOL)) {
         const [name, rulesStr] = workflowStr.split("{");                
         const rules: Rule[] = parseRules(rulesStr);        
-        workflows.set(name, new Workflow(name, rules));
+        workflows.set(name, rules);
     }
 
     return workflows;
@@ -27,8 +37,7 @@ const parseRules = (rulesStr: string) => {
 
         if (ruleStr.indexOf(":") !== -1) {
             const ruleStrSplit = ruleStr.split(":");
-            const nameStr = ruleStrSplit[0].slice(0, 1);
-            const name = nameStr === "x" ? 0 : (nameStr === "m" ? 1 : (nameStr === "a" ? 2 : 3));
+            const name = ruleStrSplit[0].slice(0, 1);            
             const sign = ruleStrSplit[0].slice(1, 2);
             const value = Number(ruleStrSplit[0].slice(2));
             condition = new Condition(name, sign, value);
@@ -39,43 +48,29 @@ const parseRules = (rulesStr: string) => {
     return rules;
 }
 
-const run = () => {
-    const workflows : Map<string, Workflow> = parseWorkflows();
-    
-    const currentPath : number[][] = [[0, 4001], [0,4001], [0,4001], [0,4001]];
-    
-    const acceptedPaths : number[][][] = [];
-    collectAcceptedPaths(acceptedPaths, workflows, "in", currentPath);      
-    
-    let result = getResult(acceptedPaths);
-
-    console.log(result);
-}
-
 const addConditionToPath = (path: number[][], condition: Condition, negate: boolean) => {
     let value = condition.value;
     
     if(condition.sign === "<" || (negate && condition.sign === ">")) {
         if(negate) value++;
         path[condition.name][1] = Math.min(path[condition.name][1], value);
-
     } else if (condition.sign === ">" || (negate && condition.sign === "<")) {
         if(negate) value--;
         path[condition.name][0] = Math.max(path[condition.name][0], value);
     }
 }
 
-function collectAcceptedPaths( acceptedPaths: number[][][], workflows: Map<string, Workflow>, goto: string, currentPath: number[][]) {
-    let workflow: Workflow = workflows.get(goto)!;
-    for (let i = 0; i < workflow.rules.length; i++) {
-        const rule = workflow.rules[i];
+function collectAcceptedPaths( acceptedPaths: number[][][], workflows: Map<string, Rule[]>, goto: string, currentPath: number[][]) {
+    let rules = workflows.get(goto)!;
+    for (let i = 0; i < rules.length; i++) {
+        const rule = rules[i];
 
         if (rule.goto === "R") continue;
 
         // add all previous condition to path (negated)
         const tmpPath: number[][] = currentPath.map(arr => arr.slice());
         for (let j = 0; j < i; j++) {
-            addConditionToPath(tmpPath, workflow.rules[j].condition!, true);
+            addConditionToPath(tmpPath, rules[j].condition!, true);
         }
 
         if (rule.goto === "A") {

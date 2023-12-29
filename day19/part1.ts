@@ -1,39 +1,10 @@
 import fs from "fs";
 import { EOL } from "os";
+import { Workflow } from "./models/Workflow";
+import { Condition } from "./models/Condition";
+import { Rule } from "./models/Rule";
 
 const DATA: string = "data";
-
-class Condition {
-    name: number;
-    sign : Function;
-    value : number;
-
-    constructor(name: number, sign: Function, value: number) {
-        this.name = name;
-        this.sign = sign;
-        this.value = value;
-    }
-}
-
-class Rule {
-    condition: Condition | null;
-    goto: string;
-
-    constructor(condition: Condition|null, goto: string) {
-        this.condition = condition;
-        this.goto = goto;
-    }
-}
-
-class Workflow {
-    name: string;
-    rules: Rule[];
-
-    constructor(name: string, rules: Rule[]) {
-        this.name = name;
-        this.rules = rules;
-    }
-}
 
 const parseInput = (): [Map<string, Workflow>, number[][]] => {
     const [workflowsStr, partRatingsStr] = fs.readFileSync(__dirname + '/' + DATA, "utf-8").split(EOL+EOL);  
@@ -71,8 +42,8 @@ const parseInput = (): [Map<string, Workflow>, number[][]] => {
     return [workflows, partRatings];
 }
 
-const lessThan = (partValue: number, conditionValue: number) => partValue < conditionValue;
-const greaterThan = (partValue: number, conditionValue: number) => partValue > conditionValue;
+const lessThan = (partValue: number, conditionValue: number): boolean => partValue < conditionValue;
+const greaterThan = (partValue: number, conditionValue: number): boolean => partValue > conditionValue;
 
 const run = () => {
     const [workflows, partRatings] : [Map<string, Workflow>, number[][]] = parseInput();
